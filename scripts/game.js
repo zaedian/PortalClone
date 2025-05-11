@@ -605,7 +605,7 @@ function updatePortalMaterials() {
 
 
 
-// In the animate() function, render portal cameras
+// Render portal cameras
 function renderPortalViews() {
     // Render the blue portal's view to the blueRenderTarget
     bluePortalCamera.position.copy(bluePortal.position);
@@ -647,46 +647,46 @@ function teleportPlayerAdvanced(fromPortal, toPortal) {
     const playerBody = player.userData.rigidBody;
     const currentVelocity = new THREE.Vector3(playerBody.getLinearVelocity().x(), playerBody.getLinearVelocity().y(), playerBody.getLinearVelocity().z());
 
-    // 1. Get player's world position and quaternion
+    // Get player's world position and quaternion
     const playerWorldPosition = new THREE.Vector3();
     player.getWorldPosition(playerWorldPosition);
     const playerWorldQuaternion = new THREE.Quaternion();
     player.getWorldQuaternion(playerWorldQuaternion);
 
-    // 2. Calculate the transform from the entering portal to the world
+    // Calculate the transform from the entering portal to the world
     const fromPortalWorldMatrix = new THREE.Matrix4().compose(fromPortal.position, fromPortal.quaternion, fromPortal.scale);
     const fromPortalWorldInverse = new THREE.Matrix4().copy(fromPortalWorldMatrix).invert();
 
-    // 3. Transform the player's world position and quaternion into the local space of the entering portal
+    // Transform the player's world position and quaternion into the local space of the entering portal
     const playerLocalPosition = playerWorldPosition.clone().applyMatrix4(fromPortalWorldInverse);
     const playerLocalQuaternion = playerWorldQuaternion.clone().premultiply(fromPortal.quaternion.clone().invert());
 
-    // 4. Calculate the transform from the exiting portal to the world
+    // Calculate the transform from the exiting portal to the world
     const toPortalWorldMatrix = new THREE.Matrix4().compose(toPortal.position, toPortal.quaternion, toPortal.scale);
 
-    // 5. Transform the player's local position from the entering portal's space to the exiting portal's world space
+    // Transform the player's local position from the entering portal's space to the exiting portal's world space
     const newPlayerWorldPosition = playerLocalPosition.clone().applyMatrix4(toPortalWorldMatrix);
 
-    // 6. Calculate the relative rotation between the portals
+    // Calculate the relative rotation between the portals
     const relativeRotation = new THREE.Quaternion().multiplyQuaternions(toPortal.quaternion, fromPortal.quaternion.clone().invert());
 
-    // 7. Apply the relative rotation to the player's world quaternion
+    // Apply the relative rotation to the player's world quaternion
     let newPlayerWorldQuaternion = playerWorldQuaternion.clone().multiply(relativeRotation);
 
-    // 8. Apply an additional 180-degree rotation around the Y-axis to correct yaw
+    // Apply an additional 180-degree rotation around the Y-axis to correct yaw
     const rotationCorrection = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
     newPlayerWorldQuaternion.multiply(rotationCorrection);
 
-    // 9. Apply the relative rotation and reverse the velocity direction
+    // Apply the relative rotation and reverse the velocity direction
     const newVelocity = currentVelocity.clone().applyQuaternion(relativeRotation).multiplyScalar(-1);
 
-    // 10. Extract the Euler angles from the relative rotation (before the correction for yaw adjustment)
+    // Extract the Euler angles from the relative rotation (before the correction for yaw adjustment)
     const relativeEuler = new THREE.Euler().setFromQuaternion(relativeRotation, 'YXZ');
 
-    // 11. Apply the change in yaw to the player's current yaw
+    // Apply the change in yaw to the player's current yaw
     yaw += relativeEuler.y + Math.PI; // Add PI (180 degrees) to the yaw
 
-    // 12. Set the new world transform for the player's physics body
+    // Set the new world transform for the player's physics body
     const newTransform = new Ammo.btTransform();
     newTransform.setIdentity();
     newTransform.setOrigin(new Ammo.btVector3(newPlayerWorldPosition.x, newPlayerWorldPosition.y, newPlayerWorldPosition.z));
@@ -694,12 +694,12 @@ function teleportPlayerAdvanced(fromPortal, toPortal) {
     playerBody.setWorldTransform(newTransform);
     playerBody.getMotionState().setWorldTransform(newTransform);
 
-    // 13. Set the new velocity
+    // Set the new velocity
     playerBody.setLinearVelocity(new Ammo.btVector3(newVelocity.x, newVelocity.y, newVelocity.z));
     playerBody.setAngularVelocity(new Ammo.btVector3(0, 0, 0)); // Reset angular velocity
     playerBody.activate();
 
-    // 14. Update the Three.js mesh position and rotation directly
+    // Update the Three.js mesh position and rotation directly
     player.position.copy(newPlayerWorldPosition);
     player.quaternion.copy(newPlayerWorldQuaternion);
 
@@ -963,7 +963,7 @@ const checkPortalEntry = (portal) => {
         const moveSpeed = keys['shift'] ? 10 : 5; // Adjusted speeds
         const currentVelocity = playerBody.getLinearVelocity();
         const desiredVelocity = new Ammo.btVector3(moveDirection.x * moveSpeed, currentVelocity.y(), moveDirection.z * moveSpeed);
-
+				
         if (keys[' '] && isGrounded && !isJumping) {
             isJumping = true;
             const jumpStrength = 8; // Adjust jump force
@@ -1011,3 +1011,4 @@ const checkPortalEntry = (portal) => {
     renderer.render(scene, camera);
     stats.end();
 }
+
