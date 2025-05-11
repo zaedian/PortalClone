@@ -262,7 +262,7 @@ function createMap() {
 
 
 function createRoom() {
-    const roomSize = 15;
+    const roomSize = 10;
     const wallHeight = 15;
     const wallThickness = 0.1;
 
@@ -273,8 +273,8 @@ function createRoom() {
     const wallTexture = textureLoader.load('textures/wall.png');
 
     // Set the repeating factor for the textures
-    const floorRepeatX = 32; // Repeat the texture 4 times along the width
-    const floorRepeatZ = 32; // Repeat the texture 4 times along the depth
+    const floorRepeatX = 16; // Repeat the texture 4 times along the width
+    const floorRepeatZ = 16; // Repeat the texture 4 times along the depth
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(floorRepeatX, floorRepeatZ);
@@ -286,7 +286,7 @@ function createRoom() {
     ceilingTexture.repeat.set(ceilingRepeatX, ceilingRepeatZ);
 
     const wallRepeatX = 16; // Repeat once along the width (height of the wall)
-    const wallRepeatY = 12; // Repeat 4 times along the height (length of the wall)
+    const wallRepeatY = 6; // Repeat 4 times along the height (length of the wall)
     wallTexture.wrapS = THREE.RepeatWrapping;
     wallTexture.wrapT = THREE.RepeatWrapping;
     wallTexture.repeat.set(wallRepeatY, wallRepeatX); // Note the order here due to wall orientation
