@@ -262,7 +262,7 @@ function createMap() {
 
 
 function createRoom() {
-    const roomSize = 10;
+    const roomSize = 15;
     const wallHeight = 15;
     const wallThickness = 0.1;
 
@@ -732,8 +732,8 @@ function animate() {
 
     if (shadersLoaded) {
         // Update iTime uniformly for animation
-        blueShaderMaterial.uniforms.iTime.value = clock.getElapsedTime() / 8;
-        orangeShaderMaterial.uniforms.iTime.value = clock.getElapsedTime() / 8;
+        blueShaderMaterial.uniforms.iTime.value = clock.getElapsedTime() / 6;
+        orangeShaderMaterial.uniforms.iTime.value = clock.getElapsedTime() / 6;
     }
 
 
