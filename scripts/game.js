@@ -516,7 +516,7 @@ function shootPortal(color) {
     // Play the shooting sound
     const shootSound = new THREE.Audio(listener);
     shootSound.setBuffer(portalGunSounds[color + 'Shoot']);
-    shootSound.setVolume(0.5); // Adjust volume as needed
+    shootSound.setVolume(0.3); // Adjust volume as needed
     shootSound.play();
 
     raycaster.setFromCamera({ x: 0, y: 0 }, camera); // center of screen
@@ -638,7 +638,7 @@ function teleportPlayerAdvanced(fromPortal, toPortal) {
 	// Play the portal enter sound
     const portalSound = new THREE.Audio(listener);
     portalSound.setBuffer(portalSounds['Portal']);
-    portalSound.setVolume(0.5); // Adjust volume as needed
+    portalSound.setVolume(0.3); // Adjust volume as needed
     portalSound.play();
 
     isPlayerInTransition = true;
@@ -835,7 +835,7 @@ const updatePortalScale = (portal, deltaTime) => {
             if (!portal.userData.openSoundPlayed && portal.userData.color && portalGunSounds[portal.userData.color + 'Open']) {
                 const openSound = new THREE.Audio(listener);
                 openSound.setBuffer(portalGunSounds[portal.userData.color + 'Open']);
-                openSound.setVolume(0.5);
+                openSound.setVolume(0.3);
                 openSound.play();
                 portal.userData.openSoundPlayed = true;
             }
