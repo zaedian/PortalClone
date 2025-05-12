@@ -996,7 +996,7 @@ const checkPortalEntry = (portal) => {
     const cameraHeightOffset = player.userData.height * 0.4; // Adjust to eye level
     camera.position.set(
         playerPosition.x,
-        playerPosition.y - cameraHeightOffset / 1.5,
+        playerPosition.y - cameraHeightOffset / 2,
         playerPosition.z
     );
 
