@@ -210,7 +210,7 @@ Ammo().then(() => {
     //createMap(); // Consider if map needs physics bodies
     createRoom();
     createPlayer();
-    createPortals();
+    //createPortals();
     animate();
 });
 
